@@ -25,7 +25,7 @@ public class Ejemplo2 {
         ArrayList<Mascota> lista = new ArrayList<>();
         MascotaDao mascotdao = new MascotaDao();
         Session sesion = HibernateUtil.getSessionFactory().openSession();
-        lista = mascotdao.listarMascota(sesion);
+        lista = mascotdao.listarMascota();
         
         for (Mascota mascota : lista){
         System.out.println(mascota.getNombreMascota());

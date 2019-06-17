@@ -2,23 +2,84 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form>
-        <p:outputLabel value="ID"/>
-        <p:inputText value="#{MascotaBean.mascota.idMascota}"/>
-        <p:outputLabel value="Nombre Mascota"/>
-        <p:inputText value="#{MascotaBean.mascota.nombreMascota}"/>
-        <p:outputLabel value="Nombre Dueño"/>
-        <p:inputText value="#{MascotaBean.mascota.nombreCliente}"/>
-        <p:outputLabel value="Raza"/>
-        <p:inputText value="#{MascotaBean.mascota.raza}"/>
-        
-        <p:commandButton value="Enviar" action="#{MascotaBean.guardarMascota()}"/>
-        </h:form>
+        <p:growl id="msj" autoUpdate="true"/>
+        <div align="center">
+            <h:form id="formMascota">
+                <p:panel style="width: 40%">
+                    <f:facet name="header">
+                        <p:column>
+                            <p:outputLabel value="Mascotas"/>
+                        </p:column>
+                    </f:facet>
+                    <p:panelGrid style="width: 40%">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="ID"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{managedBean.mascota.idMascota}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Nombre Mascota"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{managedBean.mascota.nombreMascota}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Nombre Dueño"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{managedBean.mascota.nombreCliente}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Raza"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{managedBean.mascota.raza}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <p:commandButton value="Enviar" action="#{managedBean.guardarMascota()}" update=":formData:dateTable,:formMascota"/>
+                    <p:commandButton value="Nuevo" action="#{managedBean.limpiar}" update=":formMascota"/>
+                    <p:commandButton value="Actualizar" action="#{managedBean.actualizarMascota()}" update=":formData:dateTable,:formMascota"/>
+                </p:panel>
+            </h:form>
+
+            <h:form id="formData">
+                <p:dataTable rowKey="#{mascota.idMascota}" selection="#{managedBean.mascota}" selectionMode="single" id="dateTable" var="mascota" value="#{managedBean.ListarMascotas()}" style="width: 40%">
+                    <p:ajax event="rowSelect" update=":formMascota"/>
+                    <p:column headerText="Codigo">
+                        <p:outputLabel value="#{mascota.idMascota}"/>  
+                    </p:column>
+                    <p:column headerText="Mascota">
+                        <p:outputLabel value="#{mascota.nombreMascota}"/> 
+                    </p:column>
+                    <p:column headerText="Cliente"> 
+                        <p:outputLabel value="#{mascota.nombreCliente}"/> 
+                    </p:column>
+                    <p:column headerText="Raza">
+                        <p:outputLabel value="#{mascota.raza}"/> 
+                    </p:column>
+
+                    <p:column headerText="Accion">
+                        <p:commandButton value="Eliminar" action="#{managedBean.eliminar(mascota)}" update=":formData" />
+                    </p:column>
+                </p:dataTable> 
+            </h:form>
+        </div>
+
     </h:body>
 </html>
 

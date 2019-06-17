@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+*que es Xamp: es un complilado de muchas tecnologias para compilar 
  */
 package Dao;
 
@@ -18,7 +19,7 @@ public class MascotaDao implements IMascota{
 
     @Override
     public boolean guardarMascota(Mascota mascota) {
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Session sesion = HibernateUtil.getSessionFactory().openSession(); //hibernateutil para crear las sesiones
         Transaction transaccion = sesion.beginTransaction();
         boolean respuesta = true;
         try{
@@ -32,8 +33,9 @@ public class MascotaDao implements IMascota{
     }
 
     @Override
-    public ArrayList<Mascota> listarMascota(Session sesion) {
-  ArrayList<Mascota> milista = new ArrayList<>();
+    public ArrayList<Mascota> listarMascota() {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        ArrayList<Mascota> milista = new ArrayList<>();
 
         //crear la consulta hacia la base de datos
         Query query = sesion.createQuery("FROM Mascota");
@@ -44,12 +46,17 @@ public class MascotaDao implements IMascota{
     }
 
     @Override
-    public void ActualizarMascota(Mascota mascota) {
-Session sesion = HibernateUtil.getSessionFactory().openSession();
+    public boolean ActualizarMascota(Mascota mascota) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
         Transaction transaccion = sesion.beginTransaction();
-        sesion.update(mascota);
-        transaccion.commit();
+        boolean respuesta = true;
+        try {
+            sesion.update(mascota);
+            transaccion.commit();
+        } catch (Exception e) {
+        }
         sesion.close();
+        return respuesta;
     }
 
     @Override
@@ -76,6 +83,21 @@ Session sesion = HibernateUtil.getSessionFactory().openSession();
         Long FilasTab=(Long) query.uniqueResult();
         Integer cont=FilasTab.intValue();
         return cont;
+    }
+
+    @Override
+    public boolean eliminar(Mascota mascota) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaccion = sesion.beginTransaction();
+        boolean respuesta = true;
+        try{
+        sesion.delete(mascota);
+        transaccion.commit();
+        }catch(Exception e){
+            respuesta = false;
+        }
+        sesion.close();
+        return respuesta;
     }
 
 

@@ -4,8 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/VI_B_2019I/Veterinaria_Masctotas/src/java/Dao/MascotaDao.java</file>
-            <file>file:/F:/VI_B_2019I/Veterinaria_Masctotas/src/java/managedBean/MascotaBean.java</file>
             <file>file:/F:/VI_B_2019I/Veterinaria_Masctotas/web/index.xhtml</file>
+            <file>file:/F:/VI_B_2019I/Veterinaria_Masctotas/src/java/managedBean/managedBean.java</file>
+            <file>file:/F:/VI_B_2019I/Veterinaria_Masctotas/src/java/Interface/IMascota.java</file>
         </group>
     </open-files>
 </project-private>
